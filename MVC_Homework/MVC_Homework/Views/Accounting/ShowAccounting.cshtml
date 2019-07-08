@@ -1,0 +1,37 @@
+﻿@model List<MVC_Homework.Models.AccountingNoteViewModel>
+@{
+    Layout = "";
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>#</th>
+                <th>類別</th>
+                <th>日期</th>
+                <th>金額</th>
+            </tr>
+            @{
+                var index = 0;
+                foreach (var accountingNoteItem in Model)
+                {
+                    if (index < 3)
+                    {
+                        index++;
+                    }
+                    else
+                    {
+                        break;
+
+                    }
+                    <tr>
+                        <th>@index</th>
+                        <th>@accountingNoteItem.CostType</th>
+                        <th>@accountingNoteItem.CostDate.ToString("yyyy-MM-dd")</th>
+                        <th>@accountingNoteItem.CostMoney.ToString("##,###")</th>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
