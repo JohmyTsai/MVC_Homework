@@ -1,4 +1,5 @@
-﻿@model MVC_Homework.Models.AccountingNoteViewModel
+﻿@using MVC_Homework.Models
+@model MVC_Homework.Models.AccountingNoteViewModel
 
 
 
@@ -12,8 +13,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CostType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CostType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CostType, "", new { @class = "text-danger" })
+                @Html.DropDownList("CostType", EnumHelper.GetSelectList(typeof(CostTypeEnum)), new { @class = "form-control" })
             </div>
         </div>
 
