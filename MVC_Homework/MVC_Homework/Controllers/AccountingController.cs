@@ -4,12 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVC_Homework.Models;
+using MVC_Homework.Service;
 
 namespace MVC_Homework.Controllers.ViewModels
 {
     public class AccountingController : Controller
     {
-        private Model1 db = new Model1();
+        private readonly AccountingNoteService _accountingNoteService;
+
+        public AccountingController()
+        {
+            _accountingNoteService = new AccountingNoteService();
+        }
+
         // GET: Accounting
         public ActionResult Add()
         {
@@ -23,17 +30,8 @@ namespace MVC_Homework.Controllers.ViewModels
         {
             if (ModelState.IsValid)
             {
-                var distin = new AccountBook()
-                {
-                    Id = Guid.NewGuid(),
-                    Categoryyy = int.Parse(source.CostType),
-                    Amounttt = source.CostMoney,
-                    Dateee = source.CostDate,
-                    Remarkkk = source.Remark
-                };
-
-                db.AccountBook.Add(distin);
-                db.SaveChanges();
+                _accountingNoteService.Add(source);
+                _accountingNoteService.Save();
             }
             return View();
         }
@@ -45,7 +43,7 @@ namespace MVC_Homework.Controllers.ViewModels
 
             List<AccountingNoteViewModel> accountingNote = new List<AccountingNoteViewModel>();
 
-            var fromDb = db.AccountBook.ToList();
+            var fromDb = _accountingNoteService.GetAll();
             foreach (var item in fromDb)
             {
                 var result = new AccountingNoteViewModel()
